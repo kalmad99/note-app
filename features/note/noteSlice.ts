@@ -20,15 +20,12 @@ export const NoteSlice = createSlice({
       },
       prepare: (title: string, description: string) => {
         const date = new Date();
-        const formattedDate = `${
-          date.getMonth()
-        }/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
         return {
           payload: {
             id: nanoid(),
             title,
             description,
-            updatedAt: formattedDate,
+            updatedAt: date.toISOString(),
           },
         };
       },
@@ -39,14 +36,10 @@ export const NoteSlice = createSlice({
     updateNote: (state, action: PayloadAction<NoteData>) => {
       const index = state.findIndex((note) => note.id === action.payload.id);
       const date = new Date();
-      const formattedDate = `${
-        date.getMonth()
-      }/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-
       if (index !== -1) {
         state[index] = {
           ...action.payload,
-          updatedAt: formattedDate,
+          updatedAt: date.toISOString(),
         };
       }
     },

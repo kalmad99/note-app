@@ -20,9 +20,12 @@ const NoteListItem = ({
   onPress,
 }: Props) => {
   const date = new Date();
-  const formattedDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
+  const updatedAtDate = new Date(updatedAt!);
+  
+  const titleFormattedDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
+  const updatedAtformattedDate = `${updatedAtDate.getMonth()}/${updatedAtDate.getDate()} ${updatedAtDate.getHours()}:${updatedAtDate.getMinutes()}`;
 
-  const finalTitle = `Text Note ${formattedDate}`;
+  const finalTitle = `Note ${titleFormattedDate}`;
 
   const dispatch = useAppDispatch();
   const getPreview = (text: string, length = 80) => {
@@ -52,7 +55,7 @@ const NoteListItem = ({
               <Text style={styles.title}>{title ? title : finalTitle}</Text>
               <Text style={{ width: "100%" }}>{getPreview(description)}</Text>
             </View>
-            <Text style={styles.updatedAt}>{updatedAt}</Text>
+            <Text style={styles.updatedAt}>{updatedAtformattedDate}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -87,7 +90,6 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 20,
     color: "#383838",
-    textTransform: "uppercase",
   },
   updatedAt: {
     width: "100%",

@@ -11,8 +11,6 @@ import "react-native-reanimated";
 
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,7 +39,6 @@ export default function RootLayout() {
             backgroundColor: "#3f51b5",
           },
           headerTitle: "",
-          statusBarHidden: true,
         }}
       >
         <Stack.Screen name="index" />

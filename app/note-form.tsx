@@ -9,8 +9,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StatusBar,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -38,8 +38,6 @@ const NoteForm = (props: Props) => {
   const handleDone = useCallback(() => {
     if (title !== "" || description !== "") {
       if (!id) {
-        const newId = nanoid();
-        setId(newId);
         dispatch(addNote(title, description));
       } else {
         dispatch(updateNote({ id, title, description }));
@@ -53,7 +51,7 @@ const NoteForm = (props: Props) => {
       style={{
         flex: 1,
         backgroundColor: "white",
-        paddingTop: StatusBar.currentHeight,
+        paddingTop: Platform.OS === 'ios' ? 0 : 20,
       }}
     >
       <View style={styles.container}>

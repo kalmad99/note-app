@@ -1,26 +1,37 @@
 import { Link } from "expo-router";
 import {
-  StatusBar,
   Text,
   TouchableOpacity,
   View,
   StyleSheet,
+  Platform,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import NoteList from "@/components/notes/NoteList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppSelector } from "@/hooks/useStore";
+import { useMemo } from "react";
 
 const Home = () => {
   const notes = useAppSelector((state) => state.note);
 
+  const sortedNotes = useMemo(() => {
+    return [...notes].sort((a, b) => {
+      const dateA = new Date(a.updatedAt!);
+      const dateB = new Date(b.updatedAt!);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }, [notes]);
+
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: Platform.OS === "ios" ? 0 : 20 }}
+    >
       <View style={styles.container}>
         <Text style={styles.header}>All notes</Text>
         <Text style={styles.subHeader}>{notes.length} notes</Text>
         <View style={styles.noteListContainer}>
-          <NoteList notes={notes} />
+          <NoteList notes={sortedNotes} />
         </View>
         <Link href="/note-form" asChild>
           <TouchableOpacity style={styles.fab}>
