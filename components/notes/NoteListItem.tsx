@@ -1,6 +1,6 @@
 import { deleteNote } from "@/features/note/noteSlice";
 import { useAppDispatch } from "@/hooks/useStore";
-import React from "react";
+import React, { useCallback } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
 
@@ -21,7 +21,7 @@ const NoteListItem = ({
 }: Props) => {
   const date = new Date();
   const updatedAtDate = new Date(updatedAt!);
-  
+
   const titleFormattedDate = `${date.getUTCMonth() + 1}/${date.getUTCDate()}`;
   const updatedAtformattedDate = `${updatedAtDate.getMonth()}/${updatedAtDate.getDate()} ${updatedAtDate.getHours()}:${updatedAtDate.getMinutes()}`;
 
@@ -32,9 +32,9 @@ const NoteListItem = ({
     return text.length > length ? text.substring(0, length - 3) + "..." : text;
   };
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     dispatch(deleteNote(id));
-  };
+  }, [id, dispatch]);
 
   return (
     <View style={styles.container}>
